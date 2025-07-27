@@ -6,10 +6,11 @@
     <title>Sign Up</title>
 </head>
 <body>
-    <form action="/sign-up" method="post">
+    <%- include("partials/errors.ejs") %>
+    <form action="/sign-up" method="POST">
 
-        <label for="name">Full Name</label>
-        <input type="text" id="name" name="full_name" required placeholder="John" />
+        <label for="fullname">Full Name</label>
+        <input type="text" id="fullname" name="fullname" required placeholder="John" />
 
         <label for="username">username</label>
         <input type="text" id="username" name="username" required />
@@ -17,8 +18,8 @@
         <label for="password">Password</label>
         <input type="password" id="password" name="password" required />
 
-        <label for="confirm-password">Confirm Password</label>
-        <input type="password" id="confirm-password" name="confirm-password" required />
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required />
 
         <button type="submit">Sign Up</button>
     </form>
