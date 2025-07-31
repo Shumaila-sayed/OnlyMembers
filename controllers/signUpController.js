@@ -1,5 +1,6 @@
 const db = require('../db/queries');
 const { body, validationResult } = require('express-validator');
+const bcrypt = require('bcryptjs');
 
 const validateUser = [
 
@@ -41,16 +42,16 @@ const newUserPost = [
 			});
         }
         
-        try {
-            console.log(req.body);
-            
-            const { fullname, username, password } = req.body;
+		try {
+			const { fullname, username, password } = req.body;
+			const hashedPassword = await bcrypt.hash(password, 10);
+			
 			if (!fullname || !username || !password) {
 				res.status(404).send('User Inputs Not Found');
 				return;
 			}
 
-			await db.newUserPost(fullname, username, password);
+			await db.newUserPost(fullname, username, hashedPassword);
 			res.redirect('/');
 		} catch (error) {
 			console.log('Error creating user: ', error);
