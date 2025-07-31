@@ -21,7 +21,7 @@ async function updateMembership(user) {
 	]);
 }
 
-async function getUserByName(username, password) {
+async function getUserByName(username) {
 	const { rows } = await pool.query('SELECT * FROM users WHERE username = $1', [
 		username,
 	]);
