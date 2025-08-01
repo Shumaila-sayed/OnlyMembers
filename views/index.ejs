@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Only Members</title>
+</head>
+<body>
+    <% if (currentUser) { %>
+        <h1>Create a New Message</h1>
+        <form action="/newMessage" method="post">
+            <label for="title">Subject</label>
+            <input type="text" name="title" id="title">
+            <label for="content">Message</label>
+            <input type="text" name="content" id="content">
+        </form>
+    <% } else { %>
+        <a href="/log-in">Log In</a>
+    <% } %>
+</body>
+</html>
