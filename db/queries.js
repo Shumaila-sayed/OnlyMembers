@@ -37,6 +37,12 @@ async function userMessagePost(title, content, user_id) {
 	await pool.query('INSERT INTO messages (title, content, user_id) VALUES ($1, $2, $3)', [title, content, user_id]);
 }
 
+async function getMessages() {
+	const { rows } = await pool.query('SELECT * FROM messages');
+	return rows;
+}
+
+
 module.exports = {
 	newUserPost,
 	findByUsername,
@@ -44,4 +50,5 @@ module.exports = {
 	getUserByName,
 	getUserById,
 	userMessagePost,
+	getMessages,
 };

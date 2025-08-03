@@ -9,7 +9,8 @@ const passport = require('./config/passport');
 const signUpRouter = require('./routes/signUpRouter');
 const membershipRouter = require('./routes/membershipRouter');
 const loginRouter = require('./routes/loginRouter');
-const newMessageRouter = require('./routes/newMessageRoute');
+const postsRouter = require('./routes/postsRouter');
+const { getAllPosts } = require('./controllers/postsControllers');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -25,11 +26,11 @@ app.use((req, res, next) => {
 	next();
 });
 
-app.use('/newMessage', newMessageRouter);
+app.use('/posts', postsRouter);
 app.use('/log-in', loginRouter);
 app.use('/sign-up', signUpRouter);
 app.use('/membership', membershipRouter)
-app.get('/', (req, res) => res.render('index'));
+app.get('/', getAllPosts);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
