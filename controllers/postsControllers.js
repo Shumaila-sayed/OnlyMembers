@@ -1,6 +1,5 @@
 const db = require('../db/queries');
 
-
 const messagePost = async (req, res) => {
 	try {
 		const { title, content } = req.body;
@@ -11,9 +10,8 @@ const messagePost = async (req, res) => {
 			return;
 		}
 		await db.userMessagePost(title, content, user.id);
-		console.log('Message posted');
 
-		res.redirect('/index');
+		res.redirect('/');
 	} catch (error) {
 		console.log('Error occurred posting', error);
 		res.status(500).send('Internal Server Error');
@@ -34,8 +32,6 @@ const getAllPosts = async (req, res) => {
 				};
 			})
 		);
-		console.log(updateMessages);
-
 		res.render('index', { messages: updateMessages });
 	} catch (error) {
 		console.log('Error getting messages', error);
@@ -43,4 +39,15 @@ const getAllPosts = async (req, res) => {
 	}
 };
 
-module.exports = { messagePost, getAllPosts };
+const deletePost = async (req, res) => {
+	try {
+		const id  = parseInt(req.params.id);
+		await db.deleteMessage(id);
+		res.redirect('/posts');
+	} catch (error) {
+		console.log('Error Deleting Messages', error);
+		res.status(500).send('Internal Server Error');		
+	}
+}
+
+module.exports = { messagePost, getAllPosts, deletePost };

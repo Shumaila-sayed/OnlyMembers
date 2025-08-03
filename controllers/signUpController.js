@@ -43,7 +43,7 @@ const newUserPost = [
         }
         
 		try {
-			const { fullname, username, password } = req.body;
+			const { fullname, username, password, admin } = req.body;
 			const hashedPassword = await bcrypt.hash(password, 10);
 			
 			if (!fullname || !username || !password) {
@@ -51,7 +51,7 @@ const newUserPost = [
 				return;
 			}
 
-			await db.newUserPost(fullname, username, hashedPassword);
+			await db.newUserPost(fullname, username, hashedPassword, admin);
 			res.redirect('/');
 		} catch (error) {
 			console.log('Error creating user: ', error);

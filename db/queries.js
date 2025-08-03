@@ -1,9 +1,9 @@
 const pool = require('./pool');
 
-async function newUserPost(fullname, username, password) {
+async function newUserPost(fullname, username, password, isAdmin) {
 	await pool.query(
-		'INSERT INTO users (full_name, username, password) VALUES ($1, $2, $3)',
-		[fullname, username, password]
+		'INSERT INTO users (full_name, username, password, role) VALUES ($1, $2, $3, $4)',
+		[fullname, username, password, isAdmin]
 	);
 }
 
@@ -42,6 +42,9 @@ async function getMessages() {
 	return rows;
 }
 
+async function deleteMessage(id) {
+	await pool.query('DELETE FROM messages WHERE id = ($1)', [id]);
+}
 
 module.exports = {
 	newUserPost,
@@ -51,4 +54,5 @@ module.exports = {
 	getUserById,
 	userMessagePost,
 	getMessages,
+	deleteMessage,
 };

@@ -16,7 +16,7 @@
             <button type="submit">Send</button>
         </form>
 
-        <a href="/membership"><%= (currentUser.role === 'member') ?  '' : 'Update your membership status'%></a>
+        <a href="/membership"><%= (currentUser.role === 'member' || 'admin') ?  '' : 'Update your membership status'%></a>
     <% } else { %>
         <a href="/log-in">Log In to View Date or author or to Create a New Message</a>
     <% } %>
@@ -24,10 +24,14 @@
     <div>
     <% for (let message of messages) { %>
       <div>
-        <p>AUTHOR: <%= (currentUser.role === 'member') ?  message.name : 'xxxx' %></p>
-        <p>DATE: <%= (currentUser.role === 'member') ? message.created_at : 'xxxx' %></p>
+        <p>AUTHOR: <%= (currentUser && currentUser.role === 'member' || 'admin') ? message.name : 'xxxx' %></p>
+        <p>DATE: <%= (currentUser && currentUser.role === 'member' || 'admin') ? message.created_at : 'xxxx' %></p>
         <p>TITLE: <%= message.title %></p>
         <p>MESSAGE: <%= message.content %></p>
+        <% if (currentUser && currentUser.role === 'admin') { %>
+            <a href="/posts/<%= message.id %>">Delete Message</a>
+            <% } %>
+
       </div>
     <% } %>
 </body>
